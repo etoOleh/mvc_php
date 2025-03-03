@@ -2,26 +2,27 @@
 
 namespace App\Application\Router;
 
+use App\Application\Views\View;
+
 class Router implements RouterInterface
 {
 
+    use RouterHelper;
     public function handle(array $routes): void
     {
         $requestMethod = $_SERVER['REQUEST_METHOD'];
         $uri = $_SERVER['REQUEST_URI'];
-        if ($requestMethod === 'POST') {
-            echo 'tessst';
-        } else {
-            $filteredRoutes = array_filter($routes, function ($route) {
-                return $route['type'] === 'page';
-            });
-            foreach ($routes as $route) {
-                if ($route['uri'] === $uri) {
-                    $controller = new $route['controller']();
-                    $method = $route['method'];
-                    $controller->$method();
-                }
+
+        $type = $requestMethod === 'POST' ? 'post' : 'page';
+
+        $filteredRoutes = self::filter($routes, $type);
+
+        foreach ($filteredRoutes as $route) {
+            if ($route['uri'] === $uri) {
+                self::controller($route);
+                return;
             }
         }
+        View::error(404);
     }
 }

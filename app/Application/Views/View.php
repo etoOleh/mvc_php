@@ -47,4 +47,13 @@ class View implements ViewInterface
         }
         include $path;
     }
+
+    public static function error(string $code): void
+    {
+        $path = __DIR__ . "/../../../views/app/errors/". $code . ".view.php";
+//        if (!file_exists($path)) {
+//            throw new ComponetNotFoundException("Error $code");
+//        }
+        include $path;
+    }
 }

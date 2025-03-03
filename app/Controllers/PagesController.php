@@ -33,7 +33,27 @@ class PagesController
     public function contacts(): void
     {
         View::show('pages/contacts', [
-            'title' => 'contacts page',
+            'title' => 'Contacts page',
+        ]);
+    }
+
+    /**
+     * @throws ViewNotFoundException
+     */
+    public function login(): void
+    {
+        View::show('pages/login', [
+            'title' => 'Login',
+        ]);
+    }
+
+    /**
+     * @throws ViewNotFoundException
+     */
+    public function register(): void
+    {
+        View::show('pages/register', [
+            'title' => 'Register',
         ]);
     }
 }
